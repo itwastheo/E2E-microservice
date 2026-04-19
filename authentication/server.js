@@ -41,10 +41,10 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/user', require('./routes/profile'));
 
 // Health check
-app.get('/health', (req, res) => {
-  res.json({ 
-    success: true, 
-    message: 'ZenSpend API is running',
+app.get('/ready', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Authentication API is ready',
     timestamp: new Date().toISOString()
   });
 });
