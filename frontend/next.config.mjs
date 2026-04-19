@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true, // Keeping this from your current config
   },
-  output: 'export',
-  trailingSlash: true,
-  disDIr: 'out',
+  output: 'standalone', // CHANGE THIS from 'export'
   images: {
     unoptimized: true,
   },

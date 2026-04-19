@@ -2,7 +2,7 @@
 
 ## 📌 Objective
 
-Design, containerize, secure, and deploy a microservices-based application (`e2ems`) using AWS, Kubernetes, CI/CD, and observability tools.
+Design, containerize, secure, and deploy a microservices-based application (`e2ems`) using AWS, Kubernetes, CI/CD, and observability tools. 
 
 
 ## 🧱 Architecture Overview
