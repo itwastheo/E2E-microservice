@@ -6,9 +6,10 @@ on:
       - 'authentication/**'
       - 'transaction/**'
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  build-authentication:
+  build-auth:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -20,7 +21,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Authentication
+      - name: Build local Auth for scanning
+        uses: docker/build-push-action@v5
+        with:
+          context: ./authentication
+          load: true
+          tags: itwastheo/e2e-auth:test-scan
+
+      - name: Scan Auth with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'itwastheo/e2e-auth:test-scan'
+          format: 'table'
+          exit-code: '0'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Final Push Auth
         uses: docker/build-push-action@v5
         with:
           context: ./authentication
@@ -41,7 +57,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Transaction
+      - name: Build local Transaction for scanning
+        uses: docker/build-push-action@v5
+        with:
+          context: ./transaction
+          load: true
+          tags: itwastheo/e2e-transaction:test-scan
+
+      - name: Scan Transaction with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'itwastheo/e2e-transaction:test-scan'
+          format: 'table'
+          exit-code: '0'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Final Push Transaction
         uses: docker/build-push-action@v5
         with:
           context: ./transaction
