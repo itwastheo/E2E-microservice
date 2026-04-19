@@ -5,6 +5,7 @@ on:
     paths:
       - 'frontend/**'
     branches: [ "main" ]
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
 
 jobs:
   build-and-push:
@@ -19,15 +20,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build local image for scanning
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          load: true # Puts the image in the local docker images list
+          tags: itwastheo/e2e-frontend:test-scan
+
       - name: Build and Scan with Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'itwastheo/e2e-frontend:${{ github.sha }}'
+          image-ref: 'itwastheo/e2e-frontend:test-scan'
           format: 'table'
-          exit-code: '0' # Don't fail yet, just report
+          exit-code: '0' 
           severity: 'CRITICAL,HIGH'
 
-      - name: Build and Push
+      - name: Final Build and Push
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
