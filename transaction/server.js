@@ -39,9 +39,17 @@ app.use('/api/transactions', require('./routes/transactions'));
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ 
-    success: true, 
-    message: 'ZenSpend API is running',
+  res.status(200).json({
+    success: true,
+    message: 'Transaction API is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/ready', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Transaction API is ready',
     timestamp: new Date().toISOString()
   });
 });
