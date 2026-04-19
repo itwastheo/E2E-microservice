@@ -6,5 +6,5 @@ variable "public_subnets" { type = list(string) }
 variable "database_subnets" { type = list(string) }
 variable "eks_node_sg_id" {
   type    = string
-  default = "" 
+  default = ""
 }

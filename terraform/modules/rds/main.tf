@@ -27,9 +27,10 @@ module "db" {
   identifier = "e2e-ms-db"
 
   engine            = "postgres"
-  engine_version    = "15.8" # This is safer and more robust for IaC
+  engine_version    = "15.14"      # This is safer and more robust for IaC
   family            = "postgres15" # <--- ADD THIS LINE
   instance_class    = "db.t3.micro"
+  major_engine_version = "15"
   allocated_storage = 20
 
   db_name  = "microservices"

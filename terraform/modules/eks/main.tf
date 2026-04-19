@@ -3,7 +3,7 @@ module "eks" {
   version = "~> 20.0"
 
   cluster_name    = var.cluster_name
-  cluster_version = "1.29"
+  cluster_version = "1.30"
 
   cluster_endpoint_public_access = true
 
@@ -17,7 +17,7 @@ module "eks" {
       max_size       = 4
       desired_size   = 2
 
-      ami_type                     = "AL2023_x86_64_STANDARD"
+      ami_type                       = "AL2023_x86_64_STANDARD"
       use_latest_ami_release_version = true
     }
   }
